@@ -49,6 +49,12 @@ public class TimeTable extends JFrame implements ActionListener {
 		field[1].setText("381");
 		field[2].setText("hec-s-92.stu");
 		field[3].setText("1");
+
+		//added button
+		tool[5] = new JButton("Continue");
+		tool[5].addActionListener(this);
+		tools.add(tool[5]);
+
 	}
 	
 	public void draw() {
@@ -105,6 +111,10 @@ public class TimeTable extends JFrame implements ActionListener {
 			break;
 		case 4:
 			System.exit(0);
+		case 5:
+			// Add code
+			break;
+
 		}
 	}
 
