@@ -28,7 +28,7 @@ public class TimeTable extends JFrame implements ActionListener {
 		String capField[] = {"Slots:", "Courses:", "Clash File:", "Iters:", "Shift:"};
 		field = new JTextField[capField.length];
 		
-		String capButton[] = {"Load", "Start", "Step", "Print", "Exit"};
+		String capButton[] = {"Load", "Start", "Step", "Print", "Exit", "Continue"};
 		tool = new JButton[capButton.length];
 		
 		tools.setLayout(new GridLayout(2 * capField.length + capButton.length, 1));
@@ -49,12 +49,6 @@ public class TimeTable extends JFrame implements ActionListener {
 		field[1].setText("381");
 		field[2].setText("hec-s-92.stu");
 		field[3].setText("1");
-
-		//added button
-		tool[5] = new JButton("Continue");
-		tool[5].addActionListener(this);
-		tools.add(tool[5]);
-
 	}
 	
 	public void draw() {
