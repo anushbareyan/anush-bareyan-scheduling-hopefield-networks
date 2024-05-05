@@ -106,7 +106,7 @@ public class TimeTable extends JFrame implements ActionListener {
 		case 4:
 			System.exit(0);
 		case 5:
-			// Add code
+			// since i dont know yet what it shoulg do after continue, ill leave it blank for now
 			break;
 
 		}
