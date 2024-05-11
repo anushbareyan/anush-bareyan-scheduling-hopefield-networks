@@ -1,15 +1,34 @@
+import java.util.Arrays;
 import java.util.Random;
 
 public class Autoassociator {
-	private int weights[][];
+	public int weights[][];
 	private int trainingCapacity;
 
 	public Autoassociator(CourseArray courses) {
 		weights = new int[courses.length()][courses.length()];
+		for(int i=1;i<weights.length;i++){
+			for(int j=1;j< weights[0].length; j++){
+				if(i==j){
+					weights[i][j] = 0;
+				}else{
+					weights[i][j] = 1;
+				}
+			}
+		}
 		trainingCapacity = (int)(courses.length()*0.139);
 		// TO DO
 		// creates a new Hopfield network with the same number of neurons
 		// as the number of courses in the input CourseArray
+	}
+
+	public void printWeights(){
+		for(int i=1;i<weights.length;i++){
+			for(int j=1;j< weights[0].length; j++){
+				System.out.print(weights[i][j]+" ");
+			}
+			System.out.println();
+		}
 	}
 
 	public int getTrainingCapacity() {
@@ -18,8 +37,8 @@ public class Autoassociator {
 
 	public void training(int pattern[]) {
 		// TODO
-		for(int i=0;i<weights.length;i++){
-			for(int j=0;j< weights[0].length; j++){
+		for(int i=1;i<weights.length;i++){
+			for(int j=1;j< weights[0].length; j++){
 				if(i==j){
 					weights[i][j] = 0;
 				}else{
