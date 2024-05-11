@@ -12,7 +12,7 @@ public class Autoassociator {
 				if(i==j){
 					weights[i][j] = 0;
 				}else{
-					weights[i][j] = 1;
+					weights[i][j] = 1; //TODO i couldnt yet initialize this properly with right values
 				}
 			}
 		}
@@ -36,7 +36,7 @@ public class Autoassociator {
 	}
 
 	public void training(int pattern[]) {
-		// TODO
+		// TODO i couldnt figure out where to use the unitUpdate method
 		for(int i=1;i<weights.length;i++){
 			for(int j=1;j< weights[0].length; j++){
 				if(i==j){
