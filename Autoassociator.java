@@ -18,6 +18,15 @@ public class Autoassociator {
 
 	public void training(int pattern[]) {
 		// TODO
+		for(int i=0;i<weights.length;i++){
+			for(int j=0;j< weights[0].length; j++){
+				if(i==j){
+					weights[i][j] = 0;
+				}else{
+					weights[i][j] += pattern[i]*pattern[j];
+				}
+			}
+		}
 
 	}
 

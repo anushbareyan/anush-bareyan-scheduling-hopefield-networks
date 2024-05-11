@@ -76,3 +76,21 @@ public void iterate(int shifts) {
 
 Shift = 17	Min clashes = 2272	at step 1
 but it wasnt that good
+
+hec-s-92.stu
+
+Shift = 17	Min clashes = 30	at step 1
+Shift = 16	Min clashes = 10	at step 288
+Shift = 15	Min clashes = 10	at step 187
+Shift = 14	Min clashes = 8	at step 852
+Shift = 13	Min clashes = 6	at step 736
+Shift = 12	Min clashes = 10	at step 262
+Shift = 24	Min clashes = 4	at step 393
+
+with the updated code but it wasnt very optimal in this case
+
+Shift = 17	Min clashes = 20	at step 1
+Shift = 16	Min clashes = 28	at step 1
+Shift = 12	Min clashes = 30	at step 1
+Shift = 24	Min clashes = 28	at step 453
+
