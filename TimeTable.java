@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 import javax.swing.*;
 
 public class TimeTable extends JFrame implements ActionListener {
@@ -22,6 +23,7 @@ public class TimeTable extends JFrame implements ActionListener {
 		add(tools);
 		
 		setVisible(true);
+
 	}
 	
 	public void setTools() {
@@ -97,12 +99,15 @@ public class TimeTable extends JFrame implements ActionListener {
 		case 2:
 			courses.iterate(Integer.parseInt(field[4].getText()));
 			draw();
+//			System.out.println(Arrays.toString(courses.getTimeSlot(5)));
 			break;
 		case 3:
 			System.out.println("Exam\tSlot\tClashes");
 			for (i = 1; i < courses.length(); i++)
 				System.out.println(i + "\t" + courses.slot(i) + "\t" + courses.status(i));
+
 			break;
+
 		case 4:
 			System.exit(0);
 		case 5:
@@ -126,5 +131,6 @@ public class TimeTable extends JFrame implements ActionListener {
 
 	public static void main(String[] args) {
 		new TimeTable();
+
 	}
 }
