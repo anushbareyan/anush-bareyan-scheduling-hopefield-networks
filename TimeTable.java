@@ -30,7 +30,7 @@ public class TimeTable extends JFrame implements ActionListener {
 		String capField[] = {"Slots:", "Courses:", "Clash File:", "Iters:", "Shift:"};
 		field = new JTextField[capField.length];
 		
-		String capButton[] = {"Load", "Start", "Step", "Print", "Exit", "Continue"};
+		String capButton[] = {"Load", "Start", "Step", "Print", "Exit", "Continue","Train"};
 		tool = new JButton[capButton.length];
 		
 		tools.setLayout(new GridLayout(2 * capField.length + capButton.length, 1));
@@ -99,7 +99,7 @@ public class TimeTable extends JFrame implements ActionListener {
 		case 2:
 			courses.iterate(Integer.parseInt(field[4].getText()));
 			draw();
-//			System.out.println(Arrays.toString(courses.getTimeSlot(5)));
+			System.out.println(Arrays.toString(courses.getTimeSlot(5)));
 			break;
 		case 3:
 			System.out.println("Exam\tSlot\tClashes");

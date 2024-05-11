@@ -93,15 +93,12 @@ public class CourseArray {
 
 	public int[] getTimeSlot(int index){
 		int[] res = new int[elements.length];
-		System.out.println(elements.length);
-		for(int i=0;i< elements.length;i++){
-			System.out.println(elements[i]);
+		for(int i=1;i< elements.length;i++){
 			if(elements[i].mySlot==index) {
 				res[i]=1;
 			}else{
 				res[i]=-1;
 			}
-			i++;
 		}
 		return res;
 	}
