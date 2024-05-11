@@ -84,7 +84,7 @@ public class CourseArray {
 				elements[index].setForce();
 				elements[index].shift(period);
 			}
-			shifts++;
+//			shifts++;
 //			if(index<elements.length/2){
 //				shifts++;
 //			}else{

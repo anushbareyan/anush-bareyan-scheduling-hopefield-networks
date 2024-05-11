@@ -99,6 +99,7 @@ public class TimeTable extends JFrame implements ActionListener {
 				}
 				System.out.println("Shift = " + field[4].getText() + "\tMin clashes = " + min + "\tat step " + step);
 				setVisible(true);
+				autoassociator = new Autoassociator(courses); // resets after clicking start
 				break;
 			case 2:
 	//			System.out.println(Arrays.toString(courses.getTimeSlot(0)));
