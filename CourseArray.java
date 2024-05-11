@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.StringTokenizer;
-
+import java.util.Random;
 public class CourseArray {
 
 	private Course elements[];
@@ -77,12 +77,19 @@ public class CourseArray {
 	}
 	
 	public void iterate(int shifts) {
+
 		for (int index = 1; index < elements.length; index++) {
 			elements[index].setForce();
-			for (int move = 1; move <= shifts && elements[index].force != 0; move++) { 
+			for (int move = 1; move <= shifts && elements[index].force != 0; move++) {
 				elements[index].setForce();
 				elements[index].shift(period);
 			}
+			if(index<elements.length/2){
+				shifts++;
+			}else{
+				shifts--;
+			}
+
 		}
 	}
 	

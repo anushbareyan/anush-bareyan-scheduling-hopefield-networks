@@ -17,7 +17,8 @@ public class Autoassociator {
 	}
 
 	public void training(int pattern[]) {
-		// TO DO
+		// TODO
+
 	}
 
 	public int unitUpdate(int neurons[]) {
