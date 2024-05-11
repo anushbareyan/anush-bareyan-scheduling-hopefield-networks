@@ -98,6 +98,22 @@ public class CourseArray {
 		for (int i = 1; i < elements.length; i++)
 			System.out.println(i + "\t" + elements[i].mySlot);
 	}
+	public void printSlot(){//doesnt work wanted top print slot, number of courses, number of clashes
+		int sum =0;
+		int clash = 0;
+		for(int i=1;i< period;i++){
+			for(int j=1; j< elements.length;j++){
+				if(elements[j].mySlot==i) {
+					sum++;
+					System.out.println(elements[j].clashSize());
+					clash+=elements[j].clashSize();
+				}
+			}
+			System.out.println(i +" "+sum+" "+clash);
+			sum=0;
+			clash=0;
+		}
+	}
 
 	public int[] getTimeSlot(int index){
 		int[] res = new int[elements.length];

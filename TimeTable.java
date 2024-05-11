@@ -140,7 +140,7 @@ public class TimeTable extends JFrame implements ActionListener {
 				autoassociator.printWeights();
 				break;
 			case 7:
-				courses.printResult();
+				courses.printSlot();
 				break;
 		}
 	}
