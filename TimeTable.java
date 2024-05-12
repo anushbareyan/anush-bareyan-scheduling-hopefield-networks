@@ -133,16 +133,9 @@ public class TimeTable extends JFrame implements ActionListener {
 				break;
 
 			case 6:
-//				autoassociator.printWeights();
-//				for(int j=1;j<courses.length();j++){ // in this code it trains on both good and bad, but ill write code that chooses good cases after i write code for printing slot, # courses, clashes
-//					autoassociator.training(courses.getTimeSlot(j));
-//				}
-//				autoassociator.printWeights();
-//				break;
-
-				autoassociator.printWeights();
+				autoassociator.printWeights();//before
 				courses.findGoodPatterns(autoassociator);//also trains
-				autoassociator.printWeights();
+				autoassociator.printWeights();//after
 				break;
 			case 7:
 				courses.printSlot();

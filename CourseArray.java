@@ -128,7 +128,8 @@ public class CourseArray {
 		return res;
 	}
 	public void findGoodPatterns(Autoassociator autoassociator){ // finds the timeslots which have 0 clashes and many courses and trains
-		System.out.println("Good Patterns:");
+		System.out.println("Good cases that autoassociator is trained on");
+		System.out.println("Slot Courses Clashes");
 		for (int j = 0; j < period; j++) {
 			int coursesInSlot = 0;
 			int clashesInSlot = 0;
@@ -140,8 +141,9 @@ public class CourseArray {
 			}
 
 			if (clashesInSlot == 0 && coursesInSlot >= (elements.length - 1) / autoassociator.getTrainingCapacity() / 2) {
+				System.out.println(j + "\t" + coursesInSlot + "\t" + clashesInSlot);
+				//				System.out.println("Timeslot " + j + ": " + Arrays.toString(timeslot));
 				int[] timeslot = this.getTimeSlot(j);
-				System.out.println("Timeslot " + j + ": " + Arrays.toString(timeslot));
 				autoassociator.training(timeslot);
 			}
 		}

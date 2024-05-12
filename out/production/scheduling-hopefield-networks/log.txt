@@ -96,3 +96,5 @@ Shift = 24	Min clashes = 28	at step 453
 
 
 I am still working on writing code to print timeslots numer of courses and clashes
+
+
