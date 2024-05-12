@@ -141,6 +141,7 @@ public class TimeTable extends JFrame implements ActionListener {
 				courses.printSlot();
 				break;
 			case 8:
+				//i tried updating on every iteration but it gave Shift = 17	Min clashes = 2147483647	at step 0, all the time, so Im still working on figuring out whats wrong
 				break;
 		}
 	}
