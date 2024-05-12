@@ -18,7 +18,7 @@ public class TimeTable extends JFrame implements ActionListener {
 		setSize(500, 800);
 		setLayout(new FlowLayout());
 		
-		screen.setPreferredSize(new Dimension(300, 800));
+		screen.setPreferredSize(new Dimension(300, 1000));
 		add(screen);
 		
 		setTools();
@@ -32,7 +32,7 @@ public class TimeTable extends JFrame implements ActionListener {
 		String capField[] = {"Slots:", "Courses:", "Clash File:", "Iters:", "Shift:"};
 		field = new JTextField[capField.length];
 		
-		String capButton[] = {"Load", "Start", "Step", "Print", "Exit", "Continue","Train", "PrintTimeslot"};
+		String capButton[] = {"Load", "Start", "Step", "Print", "Exit", "Continue","Train", "PrintTimeslot","update"};
 		tool = new JButton[capButton.length];
 		
 		tools.setLayout(new GridLayout(4 * capField.length + capButton.length, 1));
@@ -50,8 +50,8 @@ public class TimeTable extends JFrame implements ActionListener {
 		}
 		
 		field[0].setText("17");
-		field[1].setText("81");
-		field[2].setText("hec-s-92.stu");
+		field[1].setText("81"); //682
+		field[2].setText("hec-s-92.stu"); //car-s-91.stu
 		field[3].setText("1");
 		field[4].setText("17");
 	}
@@ -99,7 +99,7 @@ public class TimeTable extends JFrame implements ActionListener {
 				}
 				System.out.println("Shift = " + field[4].getText() + "\tMin clashes = " + min + "\tat step " + step);
 				setVisible(true);
-				autoassociator = new Autoassociator(courses); // resets after clicking start
+//				autoassociator = new Autoassociator(courses); // resets after clicking start
 				break;
 			case 2:
 	//			System.out.println(Arrays.toString(courses.getTimeSlot(0)));
@@ -139,6 +139,23 @@ public class TimeTable extends JFrame implements ActionListener {
 				break;
 			case 7:
 				courses.printSlot();
+				break;
+			case 8:
+//				min = Integer.MAX_VALUE;
+//				step = 0;
+//				for (int iteration = 1; iteration <= Integer.parseInt(field[3].getText()); iteration++) {
+//					courses.iterate(Integer.parseInt(field[4].getText()));
+//					autoassociator.training(); // Train autoassociator
+//					autoassociator.unitUpdate(); // Perform unit update
+//					draw();
+//					clashes = courses.clashesLeft();
+//					if (clashes < min) {
+//						min = clashes;
+//						step = iteration;
+//					}
+//				}
+//				System.out.println("Shift = " + field[4].getText() + "\tMin clashes = " + min + "\tat step " + step);
+//				setVisible(true);
 				break;
 		}
 	}

@@ -5,25 +5,8 @@ public class Autoassociator {
 	private int trainingCapacity;
 
 	public Autoassociator(CourseArray courses) {
-		weights = new int[courses.length()][courses.length()];
-		for(int i=1;i<weights.length;i++){
-			for(int j=1;j< weights[0].length; j++){
-				int n = courses.length() - 1;
-				weights = new int[n][n];
-				trainingCapacity = n;
-//				if(i==j){// I am not sure if this is the right way to initialize the matrix
-//					weights[i][j] = 0;
-//				}else if(courses.slot(i) == courses.slot(j)){
-//					weights[i][j] = 1;
-//				}else{
-//					weights[i][j] = -1;
-//				}
-			}
-		}
-		trainingCapacity = (int)(courses.length()*0.139);
-		// TO DO
-		// creates a new Hopfield network with the same number of neurons
-		// as the number of courses in the input CourseArray
+		weights = new int[courses.length() - 1][courses.length() - 1];
+		trainingCapacity = (int)((courses.length() - 1)*0.139);
 	}
 
 	public void printWeights(){
