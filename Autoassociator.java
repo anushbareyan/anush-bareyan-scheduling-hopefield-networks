@@ -9,7 +9,7 @@ public class Autoassociator {
 		weights = new int[courses.length()][courses.length()];
 		for(int i=1;i<weights.length;i++){
 			for(int j=1;j< weights[0].length; j++){
-				if(i==j){
+				if(i==j){// I am not sure if this is the right way to initialize the matrix
 					weights[i][j] = 0;
 				}else if(courses.slot(i) == courses.slot(j)){
 					weights[i][j] = 1;

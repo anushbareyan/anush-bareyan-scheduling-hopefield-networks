@@ -18,7 +18,7 @@ public class TimeTable extends JFrame implements ActionListener {
 		setSize(500, 800);
 		setLayout(new FlowLayout());
 		
-		screen.setPreferredSize(new Dimension(400, 800));
+		screen.setPreferredSize(new Dimension(300, 800));
 		add(screen);
 		
 		setTools();
@@ -35,7 +35,7 @@ public class TimeTable extends JFrame implements ActionListener {
 		String capButton[] = {"Load", "Start", "Step", "Print", "Exit", "Continue","Train", "PrintTimeslot"};
 		tool = new JButton[capButton.length];
 		
-		tools.setLayout(new GridLayout(2 * capField.length + capButton.length, 1));
+		tools.setLayout(new GridLayout(4 * capField.length + capButton.length, 1));
 		
 		for (int i = 0; i < field.length; i++) {
 			tools.add(new JLabel(capField[i]));
@@ -134,7 +134,7 @@ public class TimeTable extends JFrame implements ActionListener {
 
 			case 6:
 				autoassociator.printWeights();
-				for(int j=1;j<courses.length();j++){
+				for(int j=1;j<courses.length();j++){ // in this code it trains on both good and bad, but ill write code that chooses good cases after i write code for printing slot, # courses, clashes
 					autoassociator.training(courses.getTimeSlot(j));
 				}
 				autoassociator.printWeights();
