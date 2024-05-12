@@ -1,0 +1,98 @@
+car-s-91.stu
+
+Shift = 17	Min clashes = 10202	at step 1
+Shift = 15	Min clashes = 2474	at step 802
+Shift = 16	Min clashes = 2156	at step 3121
+Shift = 14	Min clashes = 2186	at step 3024
+Shift = 13	Min clashes = 2496	at step 1098
+Shift = 12	Min clashes = 2334	at step 3101
+Shift = 28	Min clashes = 2468	at step 2840
+Shift = 56	Min clashes = 2228	at step 2982
+Shift = 20	Min clashes = 2324	at step 1763
+Shift = 18	Min clashes = 2504	at step 3798
+
+then I thought that if we change the shifts for each course then the result would be better, because the courses wouldnt come and sit in the same place that often. so I changed the code
+public void iterate(int shifts) {
+		for (int index = 1; index < elements.length; index++) {
+			elements[index].setForce();
+			for (int move = 1; move <= shifts && elements[index].force != 0; move++) {
+				elements[index].setForce();
+				elements[index].shift(period);
+			}
+			shifts++;
+		}
+	}
+and it worked
+
+Shift = 17	Min clashes = 2448	at step 1
+Shift = 56	Min clashes = 2426	at step 1
+Shift = 18	Min clashes = 2494	at step 1
+Shift = 15	Min clashes = 2418	at step 1
+
+then I thought that maybe if shifts are not only incremented but decremented then the result would get better.
+public void iterate(int shifts) {
+		for (int index = 1; index < elements.length; index++) {
+			elements[index].setForce();
+			for (int move = 1; move <= shifts && elements[index].force != 0; move++) {
+				elements[index].setForce();
+				elements[index].shift(period);
+			}
+			if(index<elements.length/2){
+				shifts++;
+			}else{
+				shifts--;
+			}
+
+		}
+	}
+
+and the results where
+Shift = 17	Min clashes = 2304	at step 1
+Shift = 18	Min clashes = 2294	at step 1
+Shift = 15	Min clashes = 2344	at step 1
+Shift = 14	Min clashes = 2312	at step 1
+Shift = 13	Min clashes = 2326	at step 1
+
+and here all the results were that it convereged right at step 1
+
+then I tried with random
+public void iterate(int shifts) {
+		Random r = new Random();
+
+		for (int index = 1; index < elements.length; index++) {
+			elements[index].setForce();
+			for (int move = 1; move <= shifts && elements[index].force != 0; move++) {
+				elements[index].setForce();
+				elements[index].shift(period);
+			}
+			if(index<elements.length/2){
+				shifts = shifts+r.nextInt(2);
+			}else{
+				shifts =shifts-r.nextInt(2);
+			}
+
+		}
+	}
+
+Shift = 17	Min clashes = 2272	at step 1
+but it wasnt that good
+
+hec-s-92.stu
+
+Shift = 17	Min clashes = 30	at step 1
+Shift = 16	Min clashes = 10	at step 288
+Shift = 15	Min clashes = 10	at step 187
+Shift = 14	Min clashes = 8	at step 852
+Shift = 13	Min clashes = 6	at step 736
+Shift = 12	Min clashes = 10	at step 262
+Shift = 24	Min clashes = 4	at step 393
+
+with the updated code but it wasnt very optimal in this case => it works well with big data
+
+Shift = 17	Min clashes = 20	at step 1
+Shift = 16	Min clashes = 28	at step 1
+Shift = 12	Min clashes = 30	at step 1
+Shift = 24	Min clashes = 28	at step 453
+
+
+I am still working on writing code to print timeslots numer of courses and clashes
