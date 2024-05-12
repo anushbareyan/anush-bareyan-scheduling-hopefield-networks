@@ -141,7 +141,7 @@ public class TimeTable extends JFrame implements ActionListener {
 //				break;
 
 				autoassociator.printWeights();
-				courses.findGoodPatterns(autoassociator);
+				courses.findGoodPatterns(autoassociator);//also trains
 				autoassociator.printWeights();
 				break;
 			case 7:
