@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 import java.util.Random;
 public class CourseArray {
@@ -98,21 +99,21 @@ public class CourseArray {
 		for (int i = 1; i < elements.length; i++)
 			System.out.println(i + "\t" + elements[i].mySlot);
 	}
-	public void printSlot(){//doesnt work wanted to print slot, number of courses, number of clashes
-		int sum =0;
-		int clash = 0;
-		for(int i=1;i< period;i++){
-			for(int j=1; j< elements.length;j++){
-				if(elements[j].mySlot==i) {
-					sum++;
-					System.out.println(elements[j].clashSize());
-					clash+=elements[j].clashSize();
+	public void printSlot(){//print slot, number of courses, number of clashes
+		System.out.println("Slot Courses Clashes");
+		for (int i = 0; i < period; i++) {
+			int coursesInSlot = 0;
+			int clashesInSlot = 0;
+			for (int j = 1; j < elements.length; j++) {
+				if (elements[j].mySlot == i) {
+					coursesInSlot++;
+					clashesInSlot += elements[j].clashSize();
 				}
 			}
-			System.out.println(i +" "+sum+" "+clash);
-			sum=0;
-			clash=0;
+			System.out.println(i + "\t" + coursesInSlot + "\t" + clashesInSlot);
 		}
+
+
 	}
 
 	public int[] getTimeSlot(int index){
@@ -126,4 +127,31 @@ public class CourseArray {
 		}
 		return res;
 	}
+	public void findGoodPatterns(Autoassociator autoassociator){
+		System.out.println("Good Patterns:");
+		for (int j = 0; j < period; j++) { // Assuming period is the number of timeslots
+			int coursesInSlot = 0;
+			int clashesInSlot = 0;
+			for (int k = 1; k < elements.length; k++) {
+				if (elements[k].mySlot == j) {
+					coursesInSlot++;
+					clashesInSlot += elements[k].clashSize();
+				}
+			}
+			// Check if clashes are 0 and courses are >= (all courses / training capacity) / 2
+			if (clashesInSlot == 0 && coursesInSlot >= (elements.length - 1) / autoassociator.getTrainingCapacity() / 2) {
+				int[] timeslot = new int[elements.length];
+				for (int k = 1; k < elements.length; k++) {
+					if (elements[k].mySlot == j) {
+						timeslot[k] = 1;
+					} else {
+						timeslot[k] = -1;
+					}
+				}
+				System.out.println("Timeslot " + j + ": " + Arrays.toString(timeslot));
+				autoassociator.training(timeslot);
+			}
+		}
+	}
+
 }

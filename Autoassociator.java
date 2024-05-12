@@ -1,5 +1,4 @@
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 
 public class Autoassociator {
 	public int weights[][];
@@ -9,19 +8,15 @@ public class Autoassociator {
 		weights = new int[courses.length()][courses.length()];
 		for(int i=1;i<weights.length;i++){
 			for(int j=1;j< weights[0].length; j++){
-				if(i==j){// I am not sure if this is the right way to initialize the matrix
-					weights[i][j] = 0;
-				}else if(courses.slot(i) == courses.slot(j)){
-					weights[i][j] = 1;
-				}else{
-					weights[i][j] = -1;
-				}
-
-
-//				if(i==j){
+				int n = courses.length() - 1;
+				weights = new int[n][n];
+				trainingCapacity = n;
+//				if(i==j){// I am not sure if this is the right way to initialize the matrix
 //					weights[i][j] = 0;
+//				}else if(courses.slot(i) == courses.slot(j)){
+//					weights[i][j] = 1;
 //				}else{
-//					weights[i][j] = 1; //TODO i couldnt yet initialize this properly with right values
+//					weights[i][j] = -1;
 //				}
 			}
 		}
@@ -46,10 +41,27 @@ public class Autoassociator {
 
 	public void training(int pattern[]) {
 		// TODO i couldnt figure out where to use the unitUpdate method here
-		for(int i=1;i<weights.length;i++){
-			for(int j=1;j< weights[0].length; j++){
-				if(i!=j){
-					weights[i][j] += pattern[i]*pattern[j];
+//		for(int i=1;i<weights.length;i++){
+//			for(int j=1;j< weights[0].length; j++){
+//				if(i!=j){
+//					weights[i][j] += pattern[i]*pattern[j]; //weights[i][j] += pattern[i]*pattern[j];
+//				}
+//			}
+//		}
+		//maybe training in randomized order may give better result since the order is not important
+		int numCourses = weights.length;
+
+		List<Integer> indices = new ArrayList<>();
+		for (int i = 1; i < numCourses; i++) {
+			indices.add(i);
+		}
+		Collections.shuffle(indices);
+
+		for (int i : indices) {
+			for (int j = i + 1; j < numCourses; j++) {
+				if (pattern[i] == pattern[j]) {
+					weights[i][j] += pattern[i] * pattern[j];
+					weights[j][i] = weights[i][j];
 				}
 			}
 		}
