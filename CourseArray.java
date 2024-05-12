@@ -94,7 +94,7 @@ public class CourseArray {
 
 		}
 	}
-	
+
 	public void printResult() {
 		for (int i = 1; i < elements.length; i++)
 			System.out.println(i + "\t" + elements[i].mySlot);

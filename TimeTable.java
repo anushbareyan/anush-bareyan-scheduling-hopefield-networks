@@ -141,21 +141,6 @@ public class TimeTable extends JFrame implements ActionListener {
 				courses.printSlot();
 				break;
 			case 8:
-//				min = Integer.MAX_VALUE;
-//				step = 0;
-//				for (int iteration = 1; iteration <= Integer.parseInt(field[3].getText()); iteration++) {
-//					courses.iterate(Integer.parseInt(field[4].getText()));
-//					autoassociator.training(); // Train autoassociator
-//					autoassociator.unitUpdate(); // Perform unit update
-//					draw();
-//					clashes = courses.clashesLeft();
-//					if (clashes < min) {
-//						min = clashes;
-//						step = iteration;
-//					}
-//				}
-//				System.out.println("Shift = " + field[4].getText() + "\tMin clashes = " + min + "\tat step " + step);
-//				setVisible(true);
 				break;
 		}
 	}
