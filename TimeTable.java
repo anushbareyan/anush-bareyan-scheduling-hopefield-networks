@@ -1,5 +1,9 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import javax.swing.*;
 
@@ -10,7 +14,7 @@ public class TimeTable extends JFrame implements ActionListener {
 	private JTextField field[];
 	private CourseArray courses;
 	private Color CRScolor[] = {Color.RED, Color.GREEN, Color.BLACK};
-
+	private PrintWriter logWriter;
 	private Autoassociator autoassociator;
 	
 	public TimeTable() {
@@ -26,6 +30,11 @@ public class TimeTable extends JFrame implements ActionListener {
 		
 		setVisible(true);
 
+		try {
+			logWriter = new PrintWriter(new BufferedWriter(new FileWriter("update_log.txt", true)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void setTools() {
@@ -56,16 +65,18 @@ public class TimeTable extends JFrame implements ActionListener {
 		field[4].setText("17");
 	}
 	
-	public void draw() {
-		Graphics g = screen.getGraphics();
-		int width = Integer.parseInt(field[0].getText()) * 10;
-		for (int courseIndex = 1; courseIndex < courses.length(); courseIndex++) {
-			g.setColor(CRScolor[courses.status(courseIndex) > 0 ? 0 : 1]);
-			g.drawLine(0, courseIndex, width, courseIndex);
-			g.setColor(CRScolor[CRScolor.length - 1]);
-			g.drawLine(10 * courses.slot(courseIndex), courseIndex, 10 * courses.slot(courseIndex) + 10, courseIndex);
-		}
-	}
+//	public void draw() {
+//		Graphics g = screen.getGraphics();
+//		int width = Integer.parseInt(field[0].getText()) * 10;
+//		for (int courseIndex = 1; courseIndex < courses.length(); courseIndex++) {
+//			g.setColor(CRScolor[courses.status(courseIndex) > 0 ? 0 : 1]);
+//			g.drawLine(0, courseIndex, width, courseIndex);
+//			g.setColor(CRScolor[CRScolor.length - 1]);
+//			g.drawLine(10 * courses.slot(courseIndex), courseIndex, 10 * courses.slot(courseIndex) + 10, courseIndex);
+//		}
+//	}
+
+
 	
 	private int getButtonIndex(JButton source) {
 		int result = 0;
@@ -142,9 +153,69 @@ public class TimeTable extends JFrame implements ActionListener {
 				break;
 			case 8:
 				//i tried updating on every iteration but it gave Shift = 17	Min clashes = 2147483647	at step 0, all the time, so Im still working on figuring out whats wrong
+				updateTimeslots();
 				break;
 		}
 	}
+
+	private void updateTimeslots() {
+		for (int i = 1; i < courses.length(); i++) {
+			int[] timeslot = courses.getTimeSlot(i);
+			System.out.println("Updating timeslot for course: " + i); // Print the course being updated
+
+			// Get the current slot of the course
+			int currentSlot = courses.slot(i);
+
+			// Perform the unit update and get the destination slot
+			autoassociator.chainUpdate(timeslot, 1);
+
+			// Log the update
+			logUpdate(timeslot);
+
+			// Find the new slot based on the updated neurons
+			int newSlot = findNewSlot(timeslot);
+
+			// Update the course slot in the CourseArray
+			courses.updateSlot(i, newSlot); // Apply the updated timeslot to the courses
+
+			// Update the neurons for the timeslot change
+			autoassociator.updateNeuronsForTimeslotChange(timeslot, i, newSlot);
+		}
+		draw(); // Redraw the GUI after updates
+	}
+
+	private int findNewSlot(int[] timeslot) {
+		// Find the new slot based on the updated neurons
+		for (int i = 1; i < timeslot.length; i++) {
+			if (timeslot[i] == 1) {
+				return i;
+			}
+		}
+		return -1; // Return an invalid slot if not found (should not happen)
+	}
+
+	private void logUpdate(int[] timeslot) {
+		StringBuilder sb = new StringBuilder();
+		for (int slot : timeslot) {
+			sb.append(slot).append(" ");
+		}
+		logWriter.println(sb.toString().trim());
+		logWriter.flush();
+		System.out.println("Logged timeslot update: " + sb.toString().trim()); // Print the logged timeslot update
+	}
+
+	public void draw() {
+		Graphics g = screen.getGraphics();
+		int width = Integer.parseInt(field[0].getText()) * 10;
+		for (int courseIndex = 1; courseIndex < courses.length(); courseIndex++) {
+			g.setColor(CRScolor[courses.status(courseIndex) > 0 ? 0 : 1]);
+			g.drawLine(0, courseIndex, width, courseIndex);
+			g.setColor(CRScolor[CRScolor.length - 1]);
+			g.drawLine(10 * courses.slot(courseIndex), courseIndex, 10 * courses.slot(courseIndex) + 10, courseIndex);
+		}
+	}
+
+
 
 	public static void main(String[] args) {
 		new TimeTable();

@@ -51,29 +51,32 @@ public class Autoassociator {
 
 	}
 
-	public int unitUpdate(int neurons[]) {
-		// TO DO
-		// implements a single update step and
-		// returns the index of the randomly selected and updated neuron
-		Random r = new Random();
-		int i = r.nextInt(neurons.length);
-		unitUpdate(neurons,i);
-		return i;
+	public void updateNeuronsForTimeslotChange(int[] neurons, int courseIndex, int newSlot) {
+		// Update neurons to reflect the new timeslot
+		for (int i = 1; i < neurons.length; i++) {
+			if (i == courseIndex) {
+				neurons[i] = 1;
+			} else {
+				neurons[i] = -1;
+			}
+		}
 	}
 
+
+	public int unitUpdate(int neurons[]) {
+		Random r = new Random();
+		int i = r.nextInt(neurons.length - 1) + 1; // Ensures i is within the valid range
+		unitUpdate(neurons, i);
+		System.out.println("Updating neuron at index: " + i);
+		return i;
+	}
 	public void unitUpdate(int neurons[], int index) {
 		int s = 0;
-		for(int i=0;i<neurons.length;i++){
-			s = s+weights[index][i]*neurons[i];
+		for (int i = 1; i < neurons.length; i++) { // Ensure proper bounds
+			s += weights[index - 1][i - 1] * neurons[i]; // Corrected index usage
 		}
-		if(s>0){
-			neurons[index] = 1;
-		}else{
-			neurons[index] = -1;
-		}
-
-		// TO DO
-		// implements the update step of a single neuron specified by index
+		neurons[index] = s > 0 ? 1 : -1;
+		System.out.println("Neuron " + index + " updated to: " + neurons[index]); // Print the updated value
 	}
 
 	public void chainUpdate(int neurons[], int steps) {

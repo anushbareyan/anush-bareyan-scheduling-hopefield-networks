@@ -136,6 +136,8 @@ Slot Courses Clashes
 14	3	0
 15	4	0
 
+
+hec-s-92.stu
 trained matrix is 81x81(not including dummy) matrix with 11,12,13 values and 0 diagonal, in reality 11 cases are enough for n=81 => the network is trained
 
 0 11 11 11 11 11 11 11 11 11 11 11 11 13 13 11 11 11 12 11 12 11 11 11 11 11 11 11 11 11 11 11 12 11 13 11 11 11 11 11 11 13 11 11 11 11 11 12 12 12 11 11 11 12 12 11 12 13 11 11 11 11 11 11 13 11 11 12 12 12 11 11 11 11 13 11 11 11 11 11

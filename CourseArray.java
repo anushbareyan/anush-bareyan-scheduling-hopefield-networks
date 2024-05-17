@@ -13,7 +13,13 @@ public class CourseArray {
 		for (int i = 1; i < elements.length; i++) 
 			elements[i] = new Course();
 	}
-	
+	public void updateSlot(int courseIndex, int newSlot) {
+		elements[courseIndex].mySlot = newSlot;
+	}
+
+
+
+
 	public void readClashes(String filename) {
 		try {
 			BufferedReader file = new BufferedReader(new FileReader(filename));
