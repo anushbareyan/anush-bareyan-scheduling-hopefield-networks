@@ -67,7 +67,6 @@ public class Autoassociator {
 		Random r = new Random();
 		int i = r.nextInt(neurons.length - 1) + 1;
 		unitUpdate(neurons, i);
-		System.out.println("Updating neuron at index: " + i);
 		return i;
 	}
 	public void unitUpdate(int neurons[], int index) {

@@ -1,3 +1,29 @@
+public String findGoodPatterns(Autoassociator autoassociator){ // finds the timeslots which have 0 clashes and many courses and trains
+		System.out.println("Good cases that autoassociator is trained on");
+		System.out.println("Slot Courses Clashes");
+		String str = "";
+		for (int j = 0; j < period; j++) {
+			int coursesInSlot = 0;
+			int clashesInSlot = 0;
+			for (int k = 1; k < elements.length; k++) {
+				if (elements[k].mySlot == j) {
+					coursesInSlot++;
+					clashesInSlot += elements[k].clashSize();
+				}
+			}
+
+			if (clashesInSlot == 0 && coursesInSlot >= (elements.length - 1) / autoassociator.getTrainingCapacity() / 2) {
+				System.out.println(j + "\t" + coursesInSlot + "\t" + clashesInSlot);
+				str+=j + "\t" + coursesInSlot + "\t" + clashesInSlot+"\n";
+				//				System.out.println("Timeslot " + j + ": " + Arrays.toString(timeslot));
+				int[] timeslot = this.getTimeSlot(j);
+				autoassociator.training(timeslot);
+			}
+		}
+		return str;
+	}
+
+
 Shift = 15
 0	5	0
 1	6	0
@@ -174,21 +200,5 @@ Shift = 17
 11	5	0
 12	4	0
 13	3	0
-
-
-Shift = 17
-1	8	0
-2	6	0
-3	8	0
-4	4	0
-5	10	0
-6	5	0
-7	6	0
-8	4	0
-9	4	0
-10	4	0
-12	3	0
-14	3	0
-15	4	0
 
 

@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 import java.util.Random;
@@ -157,5 +158,36 @@ public class CourseArray {
 		}
 		return str;
 	}
+
+	public int[] findBadPatterns(Autoassociator autoassociator) {
+		System.out.println("Slot Courses Clashes");
+		ArrayList<Integer> badPatternIndices = new ArrayList<>();
+
+		for (int j = 0; j < period; j++) {
+			int coursesInSlot = 0;
+			int clashesInSlot = 0;
+			for (int k = 1; k < elements.length; k++) {
+				if (elements[k].mySlot == j) {
+					coursesInSlot++;
+					clashesInSlot += elements[k].clashSize();
+				}
+			}
+
+			// Define a bad pattern: high clashes and low number of courses
+			if (!(clashesInSlot == 0 && coursesInSlot >= (elements.length - 1) / autoassociator.getTrainingCapacity() / 2)) {
+				System.out.println(j + "\t" + coursesInSlot + "\t" + clashesInSlot);
+				badPatternIndices.add(j);
+			}
+		}
+
+		// Convert ArrayList to int[]
+		int[] result = new int[badPatternIndices.size()];
+		for (int i = 0; i < badPatternIndices.size(); i++) {
+			result[i] = badPatternIndices.get(i);
+		}
+
+		return result;
+	}
+
 
 }

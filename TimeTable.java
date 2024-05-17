@@ -157,8 +157,30 @@ public class TimeTable extends JFrame implements ActionListener {
 				courses.printSlot();
 				break;
 			case 8:
-				//i tried updating on every iteration but it gave Shift = 17	Min clashes = 2147483647	at step 0, all the time, so Im still working on figuring out whats wrong
-				updateTimeslots();
+				//ithis finds the timeslots that have clashes and applies updates on them
+//				updateTimeslots();
+				min = Integer.MAX_VALUE;
+				step = 0;
+				for (int iteration = 1; iteration <= Integer.parseInt(field[3].getText()); iteration++) {
+					courses.iterate(Integer.parseInt(field[4].getText()));
+//					draw();
+					clashes = courses.clashesLeft();
+					if (clashes < min) {
+						min = clashes;
+						step = iteration;
+					}
+					int[] bad_patterns = courses.findBadPatterns(autoassociator);
+					for(int j=0;j<bad_patterns.length;j++){
+						System.out.println("before: "+Arrays.toString(courses.getTimeSlot(j)));
+						int index_updated = autoassociator.unitUpdate(courses.getTimeSlot(j));
+						draw();
+						System.out.println("after:  "+Arrays.toString(courses.getTimeSlot(j)));
+					}
+
+				}
+				System.out.println("Shift = " + field[4].getText() + "\tMin clashes = " + min + "\tat step " + step);
+				setVisible(true);
+
 				break;
 		}
 	}
