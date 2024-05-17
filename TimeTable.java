@@ -55,8 +55,8 @@ public class TimeTable extends JFrame implements ActionListener {
 		}
 		
 		field[0].setText("17");
-		field[1].setText("81"); //682
-		field[2].setText("hec-s-92.stu"); //car-s-91.stu
+		field[1].setText("682"); //682  81
+		field[2].setText("car-s-91.stu"); //car-s-91.stu  hec-s-92.stu
 		field[3].setText("1");
 		field[4].setText("17");
 	}
@@ -145,19 +145,19 @@ public class TimeTable extends JFrame implements ActionListener {
 				}catch(Exception e){
 
 				}
-				autoassociator.printWeights();//before
+				//autoassociator.printWeights();//before
 				String s = courses.findGoodPatterns(autoassociator);//also trains
 				logWriter.println("Shift = " + field[4].getText());
 				logWriter.println(s);
 				logWriter.println();
 				logWriter.flush();
-				autoassociator.printWeights();//after
+				//autoassociator.printWeights();//after
 				break;
 			case 7:
 				courses.printSlot();
 				break;
 			case 8:
-				//ithis finds the timeslots that have clashes and applies updates on them
+				//this finds the timeslots that have clashes and applies updates on them. works but it gives sometimes worse sometimes better results then without it(25slot 1000it trained on 17slots(for 682))
 //				updateTimeslots();
 				min = Integer.MAX_VALUE;
 				step = 0;
@@ -173,8 +173,15 @@ public class TimeTable extends JFrame implements ActionListener {
 					for(int j=0;j<bad_patterns.length;j++){
 						System.out.println("before: "+Arrays.toString(courses.getTimeSlot(j)));
 						int index_updated = autoassociator.unitUpdate(courses.getTimeSlot(j));
-						draw();
+
 						System.out.println("after:  "+Arrays.toString(courses.getTimeSlot(j)));
+						// Update the slot of each course in the CourseArray
+						for (int k = 1; k < courses.length(); k++) {
+							if (courses.getTimeSlot(bad_patterns[j])[k] == 1) {
+								courses.updateSlot(k, bad_patterns[j]);
+							}
+						}
+						draw();
 					}
 
 				}

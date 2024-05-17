@@ -154,6 +154,12 @@ public class CourseArray {
 				//				System.out.println("Timeslot " + j + ": " + Arrays.toString(timeslot));
 				int[] timeslot = this.getTimeSlot(j);
 				autoassociator.training(timeslot);
+			}else if(clashesInSlot < 40 && coursesInSlot >= (elements.length - 1) / autoassociator.getTrainingCapacity() / 2){
+				System.out.println(j + "\t" + coursesInSlot + "\t" + clashesInSlot);
+				str+=j + "\t" + coursesInSlot + "\t" + clashesInSlot+"\n";
+				//				System.out.println("Timeslot " + j + ": " + Arrays.toString(timeslot));
+				int[] timeslot = this.getTimeSlot(j);
+				autoassociator.training(timeslot);
 			}
 		}
 		return str;
