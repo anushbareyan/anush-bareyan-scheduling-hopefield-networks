@@ -65,18 +65,18 @@ public class Autoassociator {
 
 	public int unitUpdate(int neurons[]) {
 		Random r = new Random();
-		int i = r.nextInt(neurons.length - 1) + 1; // Ensures i is within the valid range
+		int i = r.nextInt(neurons.length - 1) + 1;
 		unitUpdate(neurons, i);
 		System.out.println("Updating neuron at index: " + i);
 		return i;
 	}
 	public void unitUpdate(int neurons[], int index) {
 		int s = 0;
-		for (int i = 1; i < neurons.length; i++) { // Ensure proper bounds
-			s += weights[index - 1][i - 1] * neurons[i]; // Corrected index usage
+		for (int i = 1; i < neurons.length; i++) {
+			s += weights[index - 1][i - 1] * neurons[i];
 		}
 		neurons[index] = s > 0 ? 1 : -1;
-		System.out.println("Neuron " + index + " updated to: " + neurons[index]); // Print the updated value
+		System.out.println("Neuron " + index + " updated to: " + neurons[index]);
 	}
 
 	public void chainUpdate(int neurons[], int steps) {

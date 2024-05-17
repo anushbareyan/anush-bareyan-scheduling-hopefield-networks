@@ -30,11 +30,7 @@ public class TimeTable extends JFrame implements ActionListener {
 		
 		setVisible(true);
 
-		try {
-			logWriter = new PrintWriter(new BufferedWriter(new FileWriter("update_log.txt", true)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
 	}
 	
 	public void setTools() {
@@ -144,8 +140,17 @@ public class TimeTable extends JFrame implements ActionListener {
 				break;
 
 			case 6:
+				try {
+					logWriter = new PrintWriter(new BufferedWriter(new FileWriter("timeslots_no_clash.txt", true)));
+				}catch(Exception e){
+
+				}
 				autoassociator.printWeights();//before
-				courses.findGoodPatterns(autoassociator);//also trains
+				String s = courses.findGoodPatterns(autoassociator);//also trains
+				logWriter.println("Shift = " + field[4].getText());
+				logWriter.println(s);
+				logWriter.println();
+				logWriter.flush();
 				autoassociator.printWeights();//after
 				break;
 			case 7:
@@ -161,43 +166,46 @@ public class TimeTable extends JFrame implements ActionListener {
 	private void updateTimeslots() {
 		for (int i = 1; i < courses.length(); i++) {
 			int[] timeslot = courses.getTimeSlot(i);
-			System.out.println("Updating timeslot for course: " + i); // Print the course being updated
+			System.out.println("Updating timeslot for course: " + i);
 
-			// Get the current slot of the course
+
 			int currentSlot = courses.slot(i);
 
-			// Perform the unit update and get the destination slot
+
 			autoassociator.chainUpdate(timeslot, 1);
 
-			// Log the update
+
 			logUpdate(timeslot);
 
-			// Find the new slot based on the updated neurons
+
 			int newSlot = findNewSlot(timeslot);
 
-			// Update the course slot in the CourseArray
-			courses.updateSlot(i, newSlot); // Apply the updated timeslot to the courses
 
-			// Update the neurons for the timeslot change
+			courses.updateSlot(i, newSlot);
+
 			autoassociator.updateNeuronsForTimeslotChange(timeslot, i, newSlot);
 		}
-		draw(); // Redraw the GUI after updates
+		draw();
 	}
 
 	private int findNewSlot(int[] timeslot) {
-		// Find the new slot based on the updated neurons
 		for (int i = 1; i < timeslot.length; i++) {
 			if (timeslot[i] == 1) {
 				return i;
 			}
 		}
-		return -1; // Return an invalid slot if not found (should not happen)
+		return -1;
 	}
 
 	private void logUpdate(int[] timeslot) {
 		StringBuilder sb = new StringBuilder();
 		for (int slot : timeslot) {
 			sb.append(slot).append(" ");
+		}
+		try {
+			logWriter = new PrintWriter(new BufferedWriter(new FileWriter("update_log.txt", true)));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		logWriter.println(sb.toString().trim());
 		logWriter.flush();
