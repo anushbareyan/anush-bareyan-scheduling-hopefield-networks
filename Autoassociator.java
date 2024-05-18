@@ -74,9 +74,4 @@ public class Autoassociator {
 			unitUpdate(neurons);
 		}
 	}
-
-//	public void fullUpdate(int neurons[]) {
-//		// TO DO
-//		// updates the input until the final state achieved
-//	}
 }

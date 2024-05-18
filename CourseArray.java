@@ -131,7 +131,7 @@ public class CourseArray {
 		}
 		return res;
 	}
-	public String findGoodPatterns(Autoassociator autoassociator){ // finds the timeslots which have 0 clashes and many courses and trains
+	public String findGoodPatterns(Autoassociator autoassociator, String filename){ // finds the timeslots which have 0 clashes and many courses and trains
 		System.out.println("Good cases that autoassociator is trained on");
 		System.out.println("Slot Courses Clashes");
 		String str = "";
@@ -147,7 +147,14 @@ public class CourseArray {
 					}
 				}
 
-				if (count< autoassociator.getTrainingCapacity() && clashesInSlot == 0 && coursesInSlot >= (elements.length - 1) /period / 2) {//TODO sloteri qanak
+				if (count< autoassociator.getTrainingCapacity() && clashesInSlot == 0 && coursesInSlot >= (elements.length - 1) /period / 2) {
+					System.out.println(j + "\t" + coursesInSlot + "\t" + clashesInSlot);
+					str += j + "\t" + coursesInSlot + "\t" + clashesInSlot + "\n";
+					//				System.out.println("Timeslot " + j + ": " + Arrays.toString(timeslot));
+					int[] timeslot = this.getTimeSlot(j);
+					autoassociator.training(timeslot);
+					count++;
+				}else if(count< autoassociator.getTrainingCapacity() && filename.equals("car-s-91.stu") && clashesInSlot == 0 && coursesInSlot >= (elements.length - 1) /period / 10){
 					System.out.println(j + "\t" + coursesInSlot + "\t" + clashesInSlot);
 					str += j + "\t" + coursesInSlot + "\t" + clashesInSlot + "\n";
 					//				System.out.println("Timeslot " + j + ": " + Arrays.toString(timeslot));
@@ -155,13 +162,14 @@ public class CourseArray {
 					autoassociator.training(timeslot);
 					count++;
 				}
-//			else if(clashesInSlot < 40 && coursesInSlot >= (elements.length - 1) / slots / 2){
-//				System.out.println(j + "\t" + coursesInSlot + "\t" + clashesInSlot);
-//				str+=j + "\t" + coursesInSlot + "\t" + clashesInSlot+"\n";
-//				//				System.out.println("Timeslot " + j + ": " + Arrays.toString(timeslot));
-//				int[] timeslot = this.getTimeSlot(j);
-//				autoassociator.training(timeslot);
-//			}
+				else if( count< autoassociator.getTrainingCapacity() && filename.equals("car-s-91.stu") && clashesInSlot < 40 && coursesInSlot >= (elements.length - 1) / period / 2){
+					System.out.println(j + "\t" + coursesInSlot + "\t" + clashesInSlot);
+					str += j + "\t" + coursesInSlot + "\t" + clashesInSlot + "\n";
+					//				System.out.println("Timeslot " + j + ": " + Arrays.toString(timeslot));
+					int[] timeslot = this.getTimeSlot(j);
+					autoassociator.training(timeslot);
+					count++;
+				}
 			}
 		}
 		autoassociator.setNumberOfCasesTrained(count);
