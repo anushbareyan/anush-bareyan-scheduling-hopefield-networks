@@ -147,7 +147,7 @@ public class TimeTable extends JFrame implements ActionListener {
 
 				}
 				//autoassociator.printWeights();//before
-				String s = courses.findGoodPatterns(autoassociator, Integer.parseInt(field[0].getText()));//also trains
+				String s = courses.findGoodPatterns(autoassociator);//also trains
 				System.out.println("cases: "+autoassociator.numberOfCasesTrained+" "+ autoassociator.getTrainingCapacity());
 				logWriter.println(field[2].getText());
 				logWriter.println("Shift = " + field[4].getText() + " Iters = " + field[3].getText());
@@ -175,8 +175,12 @@ public class TimeTable extends JFrame implements ActionListener {
 						step = iteration;
 
 					}
-					if (iteration % 1 == 0) {
-						autoassociator.unitUpdate_replace(courses.getTimeSlot(rand.nextInt(0, 16)), courses.getTimeSlot(rand.nextInt(0, 16)));
+					if (iteration % 5 == 0) { //update every 5 iters
+						int[] arr =courses.slotsWithLessCourses();
+//						System.out.println(Arrays.toString(arr));
+						int r =rand.nextInt(0,arr.length);
+						autoassociator.unitUpdate_replace(courses.getTimeSlot(rand.nextInt(0, 16)), courses.getTimeSlot(arr[r])); // selects to replace with some random one from slots with less courses
+						draw();
 					}
 				}
 

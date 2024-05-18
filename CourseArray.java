@@ -134,7 +134,7 @@ public class CourseArray {
 		}
 		return res;
 	}
-	public String findGoodPatterns(Autoassociator autoassociator, int slots){ // finds the timeslots which have 0 clashes and many courses and trains
+	public String findGoodPatterns(Autoassociator autoassociator){ // finds the timeslots which have 0 clashes and many courses and trains
 		System.out.println("Good cases that autoassociator is trained on");
 		System.out.println("Slot Courses Clashes");
 		String str = "";
@@ -150,7 +150,7 @@ public class CourseArray {
 					}
 				}
 
-				if (count< autoassociator.getTrainingCapacity() && clashesInSlot == 0 && coursesInSlot >= (elements.length - 1) /slots / 2) {//TODO sloteri qanak
+				if (count< autoassociator.getTrainingCapacity() && clashesInSlot == 0 && coursesInSlot >= (elements.length - 1) /period / 2) {//TODO sloteri qanak
 					System.out.println(j + "\t" + coursesInSlot + "\t" + clashesInSlot);
 					str += j + "\t" + coursesInSlot + "\t" + clashesInSlot + "\n";
 					//				System.out.println("Timeslot " + j + ": " + Arrays.toString(timeslot));
@@ -172,32 +172,47 @@ public class CourseArray {
 	}
 
 
-	public int[] findBadPatterns(Autoassociator autoassociator) {
-		System.out.println("Slot Courses Clashes");
-		ArrayList<Integer> badPatternIndices = new ArrayList<>();
-
-		for (int j = 0; j < period; j++) {
-			int coursesInSlot = 0;
-			int clashesInSlot = 0;
+	public int[] slotsWithLessCourses() {
+		ArrayList<Integer> array = new ArrayList<>();
+		int coursesInSlot = 0;
+		int clashesInSlot = 0;
+		for (int k = 1; k < elements.length; k++) {
+			if (elements[k].mySlot == 0) {
+				coursesInSlot++;
+				clashesInSlot += elements[k].clashSize();
+			}
+		}
+		int min = coursesInSlot;
+		System.out.println(min);
+		for (int j = 1; j < period; j++) {
+			 coursesInSlot = 0;
+			 clashesInSlot = 0;
 			for (int k = 1; k < elements.length; k++) {
 				if (elements[k].mySlot == j) {
 					coursesInSlot++;
 					clashesInSlot += elements[k].clashSize();
 				}
 			}
-
-			// Define a bad pattern: high clashes and low number of courses
-			if (!(clashesInSlot == 0 && coursesInSlot >= (elements.length - 1) / 17/ 2)) {
-				System.out.println(j + "\t" + coursesInSlot + "\t" + clashesInSlot);
-				badPatternIndices.add(j);
+			if(min>coursesInSlot){
+				min = coursesInSlot;
 			}
+			if (coursesInSlot<=min*1.1) {
+//				System.out.println(j + "\t" + coursesInSlot + "\t" + clashesInSlot);
+				array.add(j);
+			}
+		}
+		Random rand = new Random();
+		if(array.isEmpty()){
+			int r =rand.nextInt(0,period);
+			array.add(r);
 		}
 
 		// Convert ArrayList to int[]
-		int[] result = new int[badPatternIndices.size()];
-		for (int i = 0; i < badPatternIndices.size(); i++) {
-			result[i] = badPatternIndices.get(i);
+		int[] result = new int[array.size()];
+		for (int i = 0; i < array.size(); i++) {
+			result[i] = array.get(i);
 		}
+
 
 		return result;
 	}

@@ -64,7 +64,7 @@ public class Autoassociator {
 			s += weights[index - 1][i - 1] * neurons[i];
 		}
 		neurons[index] = s > 0 ? 1 : -1;
-		System.out.println("Neuron " + index + " updated to: " + neurons[index]);
+//		System.out.println("Neuron " + index + " updated to: " + neurons[index]);
 	}
 
 	public void chainUpdate(int neurons[], int steps) {
