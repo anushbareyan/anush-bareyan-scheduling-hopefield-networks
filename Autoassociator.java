@@ -4,7 +4,7 @@ public class Autoassociator {
 	public int weights[][];
 	private int trainingCapacity;
 
-	public int numberOfCasesTrained;
+	public int numberOfCasesTrained; // number of slots trained on
 
 	public Autoassociator(CourseArray courses) {
 		weights = new int[courses.length() - 1][courses.length() - 1];
@@ -63,7 +63,7 @@ public class Autoassociator {
 		for (int i = 1; i < neurons.length; i++) {
 			s += weights[index - 1][i - 1] * neurons[i];
 		}
-		neurons[index] = s > 0 ? 1 : -1;
+		neurons[index] = s > 0 ? 1 : -1;//this always gives -1
 //		System.out.println("Neuron " + index + " updated to: " + neurons[index]);
 	}
 

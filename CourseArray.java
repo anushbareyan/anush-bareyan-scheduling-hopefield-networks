@@ -18,9 +18,6 @@ public class CourseArray {
 		elements[courseIndex].mySlot = newSlot;
 	}
 
-
-
-
 	public void readClashes(String filename) {
 		try {
 			BufferedReader file = new BufferedReader(new FileReader(filename));
@@ -183,7 +180,7 @@ public class CourseArray {
 			}
 		}
 		int min = coursesInSlot;
-		System.out.println(min);
+//		System.out.println(min);
 		for (int j = 1; j < period; j++) {
 			 coursesInSlot = 0;
 			 clashesInSlot = 0;

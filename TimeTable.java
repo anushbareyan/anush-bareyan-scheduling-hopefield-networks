@@ -56,7 +56,7 @@ public class TimeTable extends JFrame implements ActionListener {
 		}
 		
 		field[0].setText("17");
-		field[1].setText("81"); //682  81
+		field[1].setText("81"); //682 81
 		field[2].setText("hec-s-92.stu"); //car-s-91.stu  hec-s-92.stu
 		field[3].setText("1");
 		field[4].setText("17");
@@ -148,14 +148,14 @@ public class TimeTable extends JFrame implements ActionListener {
 				}
 				//autoassociator.printWeights();//before
 				String s = courses.findGoodPatterns(autoassociator);//also trains
-				System.out.println("cases: "+autoassociator.numberOfCasesTrained+" "+ autoassociator.getTrainingCapacity());
+//				System.out.println("cases: "+autoassociator.numberOfCasesTrained+" "+ autoassociator.getTrainingCapacity());
 				logWriter.println(field[2].getText());
 				logWriter.println("Shift = " + field[4].getText() + " Iters = " + field[3].getText());
 				logWriter.println(s);
 				logWriter.println();
 				logWriter.flush();
 				autoassociator.printWeights();//after
-				System.out.println("cases: "+autoassociator.numberOfCasesTrained);
+//				System.out.println("cases: "+autoassociator.numberOfCasesTrained);
 				break;
 			case 7:
 				courses.printSlot();
