@@ -1,4 +1,4 @@
-this is some small part from 2 iteration updates on bad timeslots provided below
+this is some small part from 2 iteration updates on bad timeslots provided below (hec)
 
 Slot Courses Clashes
 0	5	4

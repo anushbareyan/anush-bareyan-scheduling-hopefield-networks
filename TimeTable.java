@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Random;
 import javax.swing.*;
 
 public class TimeTable extends JFrame implements ActionListener {
@@ -55,8 +56,8 @@ public class TimeTable extends JFrame implements ActionListener {
 		}
 		
 		field[0].setText("17");
-		field[1].setText("682"); //682  81
-		field[2].setText("car-s-91.stu"); //car-s-91.stu  hec-s-92.stu
+		field[1].setText("81"); //682  81
+		field[2].setText("hec-s-92.stu"); //car-s-91.stu  hec-s-92.stu
 		field[3].setText("1");
 		field[4].setText("17");
 	}
@@ -109,21 +110,21 @@ public class TimeTable extends JFrame implements ActionListener {
 //				autoassociator = new Autoassociator(courses); // resets after clicking start
 				break;
 			case 2:
-	//			System.out.println(Arrays.toString(courses.getTimeSlot(0)));
+				//			System.out.println(Arrays.toString(courses.getTimeSlot(0)));
 				courses.iterate(Integer.parseInt(field[4].getText()));
 				draw();
 
 				break;
 			case 3:
-				System.out.println("Exam\tSlot\tClashes");
-				for (i = 1; i < courses.length(); i++)
-					System.out.println(i + "\t" + courses.slot(i) + "\t" + courses.status(i));
-
 				break;
 
 			case 4:
 				System.exit(0);
 			case 5:
+
+				System.out.println("Exam\tSlot\tClashes");
+				for (i = 1; i < courses.length(); i++)
+					System.out.println(i + "\t" + courses.slot(i) + "\t" + courses.status(i));
 				min = Integer.MAX_VALUE;
 				step = 0;
 				for (int iteration = 1; iteration <= Integer.parseInt(field[3].getText()); iteration++) {
@@ -142,105 +143,49 @@ public class TimeTable extends JFrame implements ActionListener {
 			case 6:
 				try {
 					logWriter = new PrintWriter(new BufferedWriter(new FileWriter("timeslots_no_clash.txt", true)));
-				}catch(Exception e){
+				} catch (Exception e) {
 
 				}
 				//autoassociator.printWeights();//before
-				String s = courses.findGoodPatterns(autoassociator);//also trains
-				logWriter.println("Shift = " + field[4].getText());
+				String s = courses.findGoodPatterns(autoassociator, Integer.parseInt(field[0].getText()));//also trains
+				System.out.println("cases: "+autoassociator.numberOfCasesTrained+" "+ autoassociator.getTrainingCapacity());
+				logWriter.println(field[2].getText());
+				logWriter.println("Shift = " + field[4].getText() + " Iters = " + field[3].getText());
 				logWriter.println(s);
 				logWriter.println();
 				logWriter.flush();
-				//autoassociator.printWeights();//after
+				autoassociator.printWeights();//after
+				System.out.println("cases: "+autoassociator.numberOfCasesTrained);
 				break;
 			case 7:
 				courses.printSlot();
 				break;
 			case 8:
-				//this finds the timeslots that have clashes and applies updates on them. works but it gives sometimes worse sometimes better results then without it(25slot 1000it trained on 17slots(for 682))
-//				updateTimeslots();
 				min = Integer.MAX_VALUE;
 				step = 0;
+				int cycle_step = 0;
+				for (i = 1; i < courses.length(); i++) courses.setSlot(i, 0);
+				Random rand = new Random();
 				for (int iteration = 1; iteration <= Integer.parseInt(field[3].getText()); iteration++) {
 					courses.iterate(Integer.parseInt(field[4].getText()));
-//					draw();
+					draw();
 					clashes = courses.clashesLeft();
 					if (clashes < min) {
 						min = clashes;
 						step = iteration;
-					}
-					int[] bad_patterns = courses.findBadPatterns(autoassociator);
-					for(int j=0;j<bad_patterns.length;j++){
-						System.out.println("before: "+Arrays.toString(courses.getTimeSlot(j)));
-						int index_updated = autoassociator.unitUpdate(courses.getTimeSlot(j));
 
-						System.out.println("after:  "+Arrays.toString(courses.getTimeSlot(j)));
-						// Update the slot of each course in the CourseArray
-						for (int k = 1; k < courses.length(); k++) {
-							if (courses.getTimeSlot(bad_patterns[j])[k] == 1) {
-								courses.updateSlot(k, bad_patterns[j]);
-							}
-						}
-						draw();
 					}
-
+					if (iteration % 1 == 0) {
+						autoassociator.unitUpdate_replace(courses.getTimeSlot(rand.nextInt(0, 16)), courses.getTimeSlot(rand.nextInt(0, 16)));
+					}
 				}
+
+
 				System.out.println("Shift = " + field[4].getText() + "\tMin clashes = " + min + "\tat step " + step);
 				setVisible(true);
-
 				break;
-		}
-	}
-
-	private void updateTimeslots() {
-		for (int i = 1; i < courses.length(); i++) {
-			int[] timeslot = courses.getTimeSlot(i);
-			System.out.println("Updating timeslot for course: " + i);
-
-
-			int currentSlot = courses.slot(i);
-
-
-			autoassociator.chainUpdate(timeslot, 1);
-
-
-			logUpdate(timeslot);
-
-
-			int newSlot = findNewSlot(timeslot);
-
-
-			courses.updateSlot(i, newSlot);
-
-			autoassociator.updateNeuronsForTimeslotChange(timeslot, i, newSlot);
-		}
-		draw();
-	}
-
-	private int findNewSlot(int[] timeslot) {
-		for (int i = 1; i < timeslot.length; i++) {
-			if (timeslot[i] == 1) {
-				return i;
 			}
 		}
-		return -1;
-	}
-
-	private void logUpdate(int[] timeslot) {
-		StringBuilder sb = new StringBuilder();
-		for (int slot : timeslot) {
-			sb.append(slot).append(" ");
-		}
-		try {
-			logWriter = new PrintWriter(new BufferedWriter(new FileWriter("update_log.txt", true)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		logWriter.println(sb.toString().trim());
-		logWriter.flush();
-		System.out.println("Logged timeslot update: " + sb.toString().trim()); // Print the logged timeslot update
-	}
-
 	public void draw() {
 		Graphics g = screen.getGraphics();
 		int width = Integer.parseInt(field[0].getText()) * 10;

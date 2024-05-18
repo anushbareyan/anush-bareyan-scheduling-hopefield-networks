@@ -134,36 +134,43 @@ public class CourseArray {
 		}
 		return res;
 	}
-	public String findGoodPatterns(Autoassociator autoassociator){ // finds the timeslots which have 0 clashes and many courses and trains
+	public String findGoodPatterns(Autoassociator autoassociator, int slots){ // finds the timeslots which have 0 clashes and many courses and trains
 		System.out.println("Good cases that autoassociator is trained on");
 		System.out.println("Slot Courses Clashes");
 		String str = "";
-		for (int j = 0; j < period; j++) {
-			int coursesInSlot = 0;
-			int clashesInSlot = 0;
-			for (int k = 1; k < elements.length; k++) {
-				if (elements[k].mySlot == j) {
-					coursesInSlot++;
-					clashesInSlot += elements[k].clashSize();
+		int count = autoassociator.numberOfCasesTrained;
+		if(count<=autoassociator.getTrainingCapacity()){
+			for (int j = 0; j < period; j++) {
+				int coursesInSlot = 0;
+				int clashesInSlot = 0;
+				for (int k = 1; k < elements.length; k++) {
+					if (elements[k].mySlot == j) {
+						coursesInSlot++;
+						clashesInSlot += elements[k].clashSize();
+					}
 				}
-			}
 
-			if (clashesInSlot == 0 && coursesInSlot >= (elements.length - 1) / autoassociator.getTrainingCapacity() / 2) {
-				System.out.println(j + "\t" + coursesInSlot + "\t" + clashesInSlot);
-				str+=j + "\t" + coursesInSlot + "\t" + clashesInSlot+"\n";
-				//				System.out.println("Timeslot " + j + ": " + Arrays.toString(timeslot));
-				int[] timeslot = this.getTimeSlot(j);
-				autoassociator.training(timeslot);
-			}else if(clashesInSlot < 40 && coursesInSlot >= (elements.length - 1) / autoassociator.getTrainingCapacity() / 2){
-				System.out.println(j + "\t" + coursesInSlot + "\t" + clashesInSlot);
-				str+=j + "\t" + coursesInSlot + "\t" + clashesInSlot+"\n";
-				//				System.out.println("Timeslot " + j + ": " + Arrays.toString(timeslot));
-				int[] timeslot = this.getTimeSlot(j);
-				autoassociator.training(timeslot);
+				if (count< autoassociator.getTrainingCapacity() && clashesInSlot == 0 && coursesInSlot >= (elements.length - 1) /slots / 2) {//TODO sloteri qanak
+					System.out.println(j + "\t" + coursesInSlot + "\t" + clashesInSlot);
+					str += j + "\t" + coursesInSlot + "\t" + clashesInSlot + "\n";
+					//				System.out.println("Timeslot " + j + ": " + Arrays.toString(timeslot));
+					int[] timeslot = this.getTimeSlot(j);
+					autoassociator.training(timeslot);
+					count++;
+				}
+//			else if(clashesInSlot < 40 && coursesInSlot >= (elements.length - 1) / slots / 2){
+//				System.out.println(j + "\t" + coursesInSlot + "\t" + clashesInSlot);
+//				str+=j + "\t" + coursesInSlot + "\t" + clashesInSlot+"\n";
+//				//				System.out.println("Timeslot " + j + ": " + Arrays.toString(timeslot));
+//				int[] timeslot = this.getTimeSlot(j);
+//				autoassociator.training(timeslot);
+//			}
 			}
 		}
+		autoassociator.setNumberOfCasesTrained(count);
 		return str;
 	}
+
 
 	public int[] findBadPatterns(Autoassociator autoassociator) {
 		System.out.println("Slot Courses Clashes");
@@ -180,7 +187,7 @@ public class CourseArray {
 			}
 
 			// Define a bad pattern: high clashes and low number of courses
-			if (!(clashesInSlot == 0 && coursesInSlot >= (elements.length - 1) / autoassociator.getTrainingCapacity() / 2)) {
+			if (!(clashesInSlot == 0 && coursesInSlot >= (elements.length - 1) / 17/ 2)) {
 				System.out.println(j + "\t" + coursesInSlot + "\t" + clashesInSlot);
 				badPatternIndices.add(j);
 			}

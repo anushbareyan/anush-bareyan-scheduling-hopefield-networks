@@ -4,9 +4,12 @@ public class Autoassociator {
 	public int weights[][];
 	private int trainingCapacity;
 
+	public int numberOfCasesTrained;
+
 	public Autoassociator(CourseArray courses) {
 		weights = new int[courses.length() - 1][courses.length() - 1];
 		trainingCapacity = (int)((courses.length() - 1)*0.139);
+		numberOfCasesTrained=0;
 	}
 
 	public void printWeights(){
@@ -22,44 +25,30 @@ public class Autoassociator {
 		return trainingCapacity;
 	}
 
+	public void setNumberOfCasesTrained(int n){
+		numberOfCasesTrained=n;
+	}
+
 	public void training(int pattern[]) {
-		// TODO i couldnt figure out where to use the unitUpdate method here
-//		for(int i=1;i<weights.length;i++){
-//			for(int j=1;j< weights[0].length; j++){
-//				if(i!=j){
-//					weights[i][j] += pattern[i]*pattern[j]; //weights[i][j] += pattern[i]*pattern[j];
-//				}
-//			}
-//		}
-		//maybe training in randomized order may give better result since the order is not important
-		int numCourses = weights.length;
-
-		List<Integer> indices = new ArrayList<>();
-		for (int i = 1; i < numCourses; i++) {
-			indices.add(i);
-		}
-		Collections.shuffle(indices);
-
-		for (int i : indices) {
-			for (int j = i + 1; j < numCourses; j++) {
-				if (pattern[i] == pattern[j]) {
-					weights[i][j] += pattern[i] * pattern[j];
-					weights[j][i] = weights[i][j];
+		for (int i = 1; i < weights.length; i++) {
+			for (int j = 1; j < weights[0].length; j++) {
+				if (i != j) {
+					weights[i][j] += pattern[i] * pattern[j]; //weights[i][j] += pattern[i]*pattern[j];
 				}
 			}
 		}
-
 	}
 
-	public void updateNeuronsForTimeslotChange(int[] neurons, int courseIndex, int newSlot) {
-		// Update neurons to reflect the new timeslot
-		for (int i = 1; i < neurons.length; i++) {
-			if (i == courseIndex) {
-				neurons[i] = 1;
-			} else {
-				neurons[i] = -1;
-			}
+	public int unitUpdate_replace(int neurons1[], int neurons2[]) {
+		Random r = new Random();
+		int i = r.nextInt(neurons1.length - 1) + 1;
+		int val1 = neurons1[i];
+		unitUpdate(neurons1, i);
+		int val2 = neurons1[i];
+		if(val1*val2==-1){// if it changed from 1 to -1 in neurons1 then add it to neurons2
+			neurons2[i]=1;
 		}
+		return i;
 	}
 
 
