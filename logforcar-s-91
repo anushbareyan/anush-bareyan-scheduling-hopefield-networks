@@ -208,3 +208,9 @@ Shift = 20	Min clashes = 6930	at step 1
 
 so after I implemented the updatecourses function in COurseArray it started to work.
 
+after the same training with 20 slots, here are the results
+
+Shift = 15	Min clashes = 2464	at step 657 (with 1000 iterations)
+Shift = 15	Min clashes = 3468	at step 170 (with 1000 iterations)
+
+
