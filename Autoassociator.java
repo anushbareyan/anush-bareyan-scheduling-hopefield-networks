@@ -40,6 +40,7 @@ public class Autoassociator {
 	}
 
 	public int unitUpdate_replace(int neurons1[], int neurons2[]) {
+//		System.out.println("before: "+Arrays.toString(neurons1));
 		Random r = new Random();
 		int i = r.nextInt(neurons1.length - 1) + 1;
 		int val1 = neurons1[i];
@@ -48,6 +49,7 @@ public class Autoassociator {
 		if(val1*val2==-1){// if it changed from 1 to -1 in neurons1 then add it to neurons2
 			neurons2[i]=1;
 		}
+//		System.out.println("after:  "+Arrays.toString(neurons1));
 		return i;
 	}
 

@@ -179,8 +179,13 @@ public class TimeTable extends JFrame implements ActionListener {
 						int[] arr =courses.slotsWithLessCourses();
 //						System.out.println(Arrays.toString(arr));
 						int r =rand.nextInt(0,arr.length);
-						int index = autoassociator.unitUpdate_replace(courses.getTimeSlot(rand.nextInt(0, Integer.parseInt(field[0].getText()))), courses.getTimeSlot(arr[r])); // selects to replace with some random one from slots with less courses
-
+						int i1 =rand.nextInt(0, Integer.parseInt(field[0].getText()));
+						int[] arr1 = courses.getTimeSlot(i1);
+						int[] arr2 = courses.getTimeSlot(arr[r]);
+						System.out.println("timet before "+Arrays.toString(courses.getTimeSlot(arr[r])));
+						int index = autoassociator.unitUpdate_replace(arr1, arr2); // selects to replace with some random one from slots with less courses
+						courses.updateCourses(index, arr1,i1,arr2,r);
+						System.out.println("timet after  "+Arrays.toString(courses.getTimeSlot(arr[r])));
 						draw();
 					}
 				}

@@ -22,14 +22,14 @@ public void iterate(int shifts) {
 			shifts++;
 		}
 	}
-and it worked
+and it worked(actually it didnt work but at the time I tought it worked, but the idea may work to after some time change the shift number for different courses)
 
 Shift = 17	Min clashes = 2448	at step 1
 Shift = 56	Min clashes = 2426	at step 1
 Shift = 18	Min clashes = 2494	at step 1
 Shift = 15	Min clashes = 2418	at step 1
 
-then I thought that maybe if shifts are not only incremented but decremented then the result would get better.
+then I thought that maybe if shifts are not only incremented but decremented then the result would get better. This too didnt work but maybe its because of the code
 public void iterate(int shifts) {
 		for (int index = 1; index < elements.length; index++) {
 			elements[index].setForce();

@@ -72,7 +72,20 @@ public class CourseArray {
 	public int maxClashSize(int index) {
 		return elements[index] == null || elements[index].clashesWith.isEmpty() ? 0 : elements[index].clashesWith.size();
 	}
-	
+
+	public void updateCourses(int i, int[] arr1,int slotnum1, int[] arr2, int slotnum2){
+		if(arr1[i]==1){
+			elements[i].mySlot = slotnum1;
+			System.out.println("arr1 = 1");
+		}else{
+			if(arr2[i]==1){
+				elements[i].mySlot = slotnum2;
+				System.out.println("arr2 = 1");
+			}
+
+		}
+
+	}
 	public int clashesLeft() {
 		int result = 0;
 		for (int i = 1; i < elements.length; i++)

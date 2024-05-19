@@ -204,3 +204,7 @@ Shift = 19	Min clashes = 1632	at step 813
 Shift = 20	Min clashes = 6930	at step 1
 ...
 
+
+
+so after I implemented the updatecourses function in COurseArray it started to work.
+
