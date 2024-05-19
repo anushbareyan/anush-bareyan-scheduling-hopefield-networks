@@ -95,9 +95,6 @@ Shift = 12	Min clashes = 30	at step 1
 Shift = 24	Min clashes = 28	at step 453
 
 
-I am still working on writing code to print timeslots numer of courses and clashes
-
-
 Training
 
 Shift = 17	Min clashes = 30	at step 1
